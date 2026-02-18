@@ -14,26 +14,46 @@
 *   **🌗 Day/Night Cycle**: The UI automatically shifts between a bright Day mode and a glowing Night mode based on simulation time.
 *   **Interactive Map**: Hover for details, click for controls, and watch live traffic particles.
 
-## 🚀 Quick Start (Windows)
+## 🚀 How to Run
 
-We've made running this project incredibly simple.
+### Prerequisites
+*   **Git**: To clone the repository.
+*   **Docker Desktop**: For the easiest (production-like) experience.
+*   *(Optional) Node.js & Python 3.9+*: If running manually without Docker.
 
-### Option 1: The "One-Click" Launch (Recommended)
-Simply double-click **`start_app.bat`**.
-*   This script auto-installs dependencies (Python/Node).
-*   Launches the Backend (Port 8001).
-*   Launches the Frontend (Port 5173).
-*   Opens your browser automatically.
-
-### Option 2: The "Safe" Launch
-Double-click **`verify_all.bat`**.
-*   Runs the full **Unit Test Suite** first.
-*   Only launches the app if all tests pass.
-
-### Option 3: Docker
-If you have Docker Desktop installed:
+### 1. Clone the Repository
+Open your terminal or command prompt and run:
 ```bash
-docker-compose up --build
+git clone https://github.com/Arnav-102/UrbanPulse.git
+cd UrbanPulse
+```
+
+### 2. Run with Docker (Recommended)
+This is the simplest way to see the app running as intended in a production environment.
+```bash
+docker-compose -f docker-compose.prod.yml up --build -d
+```
+*   **Frontend**: Open [http://localhost](http://localhost)
+*   **Backend**: Running at [http://localhost:8001](http://localhost:8001)
+
+### 3. Run Manually (Windows 🪟)
+If you don't have Docker, you can use our automated script:
+1.  Double-click **`start_app.bat`** in the project folder.
+2.  Wait for it to install dependencies and launch the browser.
+
+### 4. Run Manually (Mac/Linux 🍎/🐧)
+```bash
+# Terminal 1: Backend
+cd backend
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8001
+
+# Terminal 2: Frontend
+cd frontend
+npm install
+npm run dev
 ```
 
 ## 🛠️ Technology Stack
