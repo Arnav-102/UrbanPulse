@@ -1,0 +1,36 @@
+.rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 5;
+    /* In front of map, behind UI overlay if possible, or adjust z-indexes */
+    overflow: hidden;
+}
+
+.rain-drop {
+    position: absolute;
+    top: -100px;
+    /* Start above screen */
+    width: 3px;
+    height: 20px;
+    /* 3D Teardrop look: Gradient + Shadow */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8));
+    border-radius: 50% 50% 50% 50% / 10% 10% 60% 60%;
+    /* Tapered shape */
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+    /* Glow */
+    animation: drop-fall linear infinite;
+}
+
+@keyframes drop-fall {
+    0% {
+        top: -100px;
+    }
+
+    100% {
+        top: 100vh;
+    }
+}

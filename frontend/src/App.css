@@ -1,0 +1,543 @@
+:root {
+  --primary-color: #2196f3;
+  --secondary-color: #ff9800;
+  --accent-color: #f44336;
+  /* Day Mode Colors */
+  --bg-gradient-start: #e0f7fa;
+  --bg-gradient-end: #80deea;
+  --panel-bg: rgba(255, 255, 255, 0.85);
+  --text-color: #333;
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Night Mode Variables --- */
+.night-mode {
+  --bg-gradient-start: #0f2027;
+  --bg-gradient-end: #203a43;
+  --panel-bg: rgba(30, 40, 50, 0.7);
+  /* Darker, transparent */
+  --text-color: #e0e0e0;
+  --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  /* Stronger shadow */
+}
+
+/* Glassmorphism for Panels & Cards */
+.district-card,
+.overview-panel,
+.control-panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  /* The Glass Effect */
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* Subtle border */
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  color: var(--text-color);
+  transition: all 0.5s ease;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Specific Night Mode Text Adjustments */
+.night-mode h1,
+.night-mode h2,
+.night-mode h3 {
+  color: #fff;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  /* Glow effect */
+}
+
+.night-mode .label {
+  color: #bbb;
+}
+
+#root {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.app-container {
+  min-height: 100vh;
+  /* Use variables for dynamic background */
+  background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+  background-attachment: fixed;
+  color: var(--text-color);
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  transition: background 1s ease, color 0.5s ease;
+}
+
+header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #333;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.simulation-time {
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  color: #64b5f6;
+  background: #1e1e1e;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.status-indicator {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.status-indicator.connected {
+  background-color: #1b5e20;
+  color: #a5d6a7;
+}
+
+.status-indicator.disconnected {
+  background-color: #b71c1c;
+  color: #ffcdd2;
+}
+
+/* Overview Panel Grid Update */
+.overview-panel {
+  display: grid;
+  grid-template-columns: 250px 1fr 300px;
+  /* Health, Map, Alerts */
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  align-items: start;
+}
+
+/* Map Panel */
+.map-panel {
+  background-color: #1e1e1e;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.map-panel h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #90caf9;
+}
+
+.map-legend {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #888;
+  font-style: italic;
+}
+
+/* Control Panel */
+.control-panel {
+  background-color: #263238;
+  border: 1px solid #37474f;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.control-panel h3 {
+  margin-top: 0;
+  color: #fff;
+  border-bottom: 1px solid #455a64;
+  padding-bottom: 0.5rem;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-control {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+
+.btn-control:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-control:active {
+  transform: translateY(0);
+}
+
+.btn-control.primary {
+  background-color: #2196f3;
+  color: white;
+}
+
+.btn-control.danger {
+  background-color: #f44336;
+  color: white;
+}
+
+.action-feedback {
+  margin-top: 1rem;
+  color: #69f0ae;
+  font-weight: bold;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Alerts Panel Adjustments */
+.alerts-panel {
+  height: 100%;
+  max-height: 400px;
+}
+
+.health-score-card {
+  background-color: #1e1e1e;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 3px solid #4caf50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.health-score-card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  color: #bdbdbd;
+}
+
+.score-value {
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+.alerts-panel {
+  background-color: #1e1e1e;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #333;
+  max-height: 200px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.alerts-panel h3 {
+  margin-top: 0;
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.5rem;
+}
+
+.alert-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alert-item {
+  padding: 0.5rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  background: #2c2c2c;
+  border-left: 4px solid #777;
+}
+
+.alert-item.critical {
+  background: rgba(244, 67, 54, 0.1);
+  border-left-color: #f44336;
+  color: #ffcdd2;
+}
+
+.alert-item.warning {
+  background: rgba(255, 152, 0, 0.1);
+  border-left-color: #ff9800;
+  color: #ffe0b2;
+}
+
+.no-alerts {
+  color: #4caf50;
+  font-style: italic;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.district-card {
+  background-color: #1e1e1e;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  text-align: left;
+  border: 1px solid #333;
+  transition: transform 0.2s;
+}
+
+.district-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.5);
+}
+
+.district-card h2 {
+  margin-top: 0;
+  color: #90caf9;
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.metric {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.metric .label {
+  font-size: 0.85rem;
+  color: #bdbdbd;
+  margin-bottom: 0.25rem;
+}
+
+.metric .value {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: #424242;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.progress-bar .fill {
+  height: 100%;
+  transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
+}
+
+.loading {
+  font-size: 1.5rem;
+  color: #757575;
+  margin-top: 3rem;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.metric-compact {
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+}
+
+.metric-compact .label {
+  font-size: 0.75rem;
+  color: #bdbdbd;
+}
+
+.metric-compact .value {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.value.warning {
+  color: #ff5252;
+}
+
+/* Scrollbar for alerts */
+.alerts-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.alerts-panel::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+.alerts-panel::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .overview-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Weather Backgrounds */
+.app-container {
+  transition: background 1s ease;
+}
+
+.app-container.clear {
+  background: linear-gradient(to bottom, #121212, #1a237e);
+}
+
+.app-container.rain {
+  background: linear-gradient(to bottom, #37474f, #263238);
+}
+
+/* Rain Effect Overlay could be added here later */
+
+.app-container.cloudy {
+  background: linear-gradient(to bottom, #424242, #616161);
+}
+
+.app-container.storm {
+  background: linear-gradient(to bottom, #212121, #000000);
+}
+
+/* Accident Marker Animation */
+.accident-marker {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.3);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.weather-badge {
+  margin-left: 10px;
+  font-size: 0.9em;
+  color: #ffca28;
+}
+
+/* --- Weather Overlays --- */
+.weather-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  /* Above bg, below content (content needs z-index > 1) */
+}
+
+/* Rain Effect */
+/* Rain Effect replaced by Rain.jsx component */
+
+/* Cloud Effect */
+.cloud-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+  background-size: 400px 400px;
+  animation: cloud-drift 60s linear infinite;
+  opacity: 0.4;
+}
+
+@keyframes cloud-drift {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Storm Flash */
+.storm-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  opacity: 0;
+  animation: lightning-flash 5s infinite;
+}
+
+@keyframes lightning-flash {
+
+  0%,
+  90%,
+  100% {
+    opacity: 0;
+  }
+
+  92% {
+    opacity: 0.6;
+  }
+
+  94% {
+    opacity: 0;
+  }
+
+  96% {
+    opacity: 0.3;
+  }
+}
+
+/* Ensure content is above weather */
+header,
+main,
+.news-ticker-container {
+  position: relative;
+  z-index: 10;
+}

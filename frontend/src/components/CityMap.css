@@ -1,0 +1,27 @@
+.traffic-flow-line {
+    animation: flow 1s linear infinite;
+}
+
+@keyframes flow {
+    from {
+        stroke-dashoffset: 10;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.district-group {
+    transition: opacity 0.2s;
+}
+
+.district-group:hover {
+    opacity: 0.9;
+    filter: brightness(1.1);
+}
+
+.district-group:hover text {
+    fill: #fff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
